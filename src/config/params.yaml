@@ -1,0 +1,14 @@
+random_state: 42
+models:
+  xgboost:
+    n_estimators: 197
+    learning_rate: 0.15637290096660023
+    max_depth: 6
+    min_child_weight: 3
+    subsample: 0.6011006228450518
+    colsample_bytree: 0.6978753170579768
+    gamma: 1.1302060561843104
+    reg_alpha: 0.0011118296584001265
+    reg_lambda: 5.797848390044669e-05
+preprocessing:
+  test_size: 0.2

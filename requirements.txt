@@ -1,6 +1,7 @@
 loguru
 mkdocs
 pip
+pydantic
 pytest
 python-dotenv
 ruff
