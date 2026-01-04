@@ -47,27 +47,31 @@ The dataset is from [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/
 
 Initial exploration revealed several important characteristics of the data:
 
-**Class Imbalance**
+### Class Imbalance
 
 The dataset is heavily imbalanced with fraudulent transactions making up only 0.17% of all transactions. This required special handling during model training using class weights and stratified sampling.
 
-**Transaction Amounts**
+### Transaction Amounts
 
 | Statistic | Legitimate | Fraud |
 |-----------|------------|-------|
-| Mean | \$88.29 | \$122.21 |
-| Median | \$22.00 | \$9.25 |
-| Max | \$25,691 | \$2,125 |
+| Mean | $88.29 | $122.21 |
+| Median | $22.00 | $9.25 |
+| Max | $25,691 | $2,125 |
 
 Fraudulent transactions have a higher mean but lower maximum amount compared to legitimate ones. This suggests fraudsters tend to avoid very large transactions that might trigger alerts.
 
-**Feature Distribution**
-
-The t-SNE visualization showed that fraudulent transactions are scattered throughout the feature space rather than forming a single cluster. This makes simple rule-based detection difficult and justifies using machine learning.
-
-**Correlation Analysis**
+### Correlation Analysis
 
 Features V1-V28 show minimal correlation with each other, which is expected since they are PCA components. This means we can use all features without worrying about multicollinearity.
+
+![Correlation Matrix](assets/corr.png)
+
+### Feature Distribution
+
+The t-SNE visualization shows that fraudulent transactions are scattered throughout the feature space rather than forming a single cluster. This makes simple rule-based detection difficult and justifies using machine learning.
+
+![t-SNE Visualization](assets/tsne.png)
 
 ## Model Development
 
@@ -116,7 +120,7 @@ Using the optimal F1 threshold:
 **Cross-Validation Results:**
 
 5-fold stratified CV on the training set confirmed model stability:
-- CV AUPRC: 0.8512 (plus/minus 0.0234)
+- CV AUPRC: 0.8512 ± 0.0234
 - Optimal trees: 151
 
 ### Feature Importance
@@ -128,21 +132,33 @@ Top 5 most important features for fraud detection:
 4. V10
 5. V16
 
+### Evaluation Plots
+
+<p align="center">
+  <img src="reports/figures/confusion_matrix.png" width="45%" alt="Confusion Matrix"/>
+  <img src="reports/figures/roc_curve.png" width="45%" alt="ROC Curve"/>
+</p>
+
+<p align="center">
+  <img src="reports/figures/precision_recall_curve.png" width="45%" alt="Precision-Recall Curve"/>
+  <img src="reports/figures/prediction_distribution.png" width="45%" alt="Prediction Distribution"/>
+</p>
+
 ## API
 
 The model is served through a FastAPI application with the following endpoints:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| \`/api/health\` | GET | Health check |
-| \`/api/predict\` | POST | Single transaction prediction |
-| \`/api/predict/batch\` | POST | Batch predictions |
-| \`/metrics\` | GET | Prometheus metrics |
-| \`/docs\` | GET | Interactive API documentation |
+| `/api/health` | GET | Health check |
+| `/api/predict` | POST | Single transaction prediction |
+| `/api/predict/batch` | POST | Batch predictions |
+| `/metrics` | GET | Prometheus metrics |
+| `/docs` | GET | Interactive API documentation |
 
 ### Example Request
 
-\`\`\`bash
+```bash
 curl -X POST "http://localhost:8000/api/predict" \
   -H "Content-Type: application/json" \
   -d '{
@@ -155,21 +171,21 @@ curl -X POST "http://localhost:8000/api/predict" \
     "V25": 0.03, "V26": -0.01, "V27": 0.01, "V28": 0.02,
     "Amount": 149.62
   }'
-\`\`\`
+```
 
 ### Example Response
 
-\`\`\`json
+```json
 {
   "is_fraud": 0,
   "probability": 0.0234,
   "threshold": 0.5
 }
-\`\`\`
+```
 
 ## Project Structure
 
-\`\`\`
+```
 fraud-detection/
 ├── app/                          # FastAPI application
 │   ├── api/
@@ -177,6 +193,7 @@ fraud-detection/
 │   │   └── schemas/              # Pydantic models
 │   ├── middleware/               # Logging middleware
 │   └── main.py                   # Application entry point
+├── assets/                       # Images for documentation
 ├── data/
 │   ├── raw/                      # Original dataset
 │   └── processed/                # Processed data
@@ -196,7 +213,7 @@ fraud-detection/
 ├── requirements.txt              # Full dependencies
 ├── requirements-prod.txt         # Production dependencies
 └── render.yaml                   # Render deployment config
-\`\`\`
+```
 
 ## Installation
 
@@ -208,43 +225,43 @@ fraud-detection/
 ### Local Setup
 
 1. Clone the repository:
-\`\`\`bash
+```bash
 git clone https://github.com/yourusername/fraud-detection.git
 cd fraud-detection
-\`\`\`
+```
 
 2. Create a virtual environment:
-\`\`\`bash
+```bash
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
 # or
 .venv\Scripts\activate     # Windows
-\`\`\`
+```
 
 3. Install dependencies:
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
-4. Download the dataset from Kaggle and place it in \`data/raw/creditcard.csv\`
+4. Download the dataset from Kaggle and place it in `data/raw/creditcard.csv`
 
 ## Usage
 
 ### Running the API Locally
 
-\`\`\`bash
+```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-\`\`\`
+```
 
-Visit \`http://localhost:8000/docs\` for the interactive API documentation.
+Visit `http://localhost:8000/docs` for the interactive API documentation.
 
 ### Running with Docker Compose
 
 This starts the API along with Prometheus and Grafana for monitoring:
 
-\`\`\`bash
+```bash
 docker compose up --build
-\`\`\`
+```
 
 Services:
 - API: http://localhost:8000
@@ -253,15 +270,15 @@ Services:
 
 ### Running the Notebooks
 
-\`\`\`bash
+```bash
 jupyter notebook notebooks/
-\`\`\`
+```
 
 ## Deployment
 
 ### Render
 
-The project includes a \`render.yaml\` for easy deployment to Render:
+The project includes a `render.yaml` for easy deployment to Render:
 
 1. Push your code to GitHub
 2. Connect your repo to Render
@@ -289,11 +306,11 @@ The Dockerfile is compatible with any container platform:
 
 ## Future Improvements
 
-- Add API authentication for production use
-- Implement model retraining pipeline
-- Add data drift detection
-- Set up CI/CD with GitHub Actions
-- Deploy to a cloud provider
+- [ ] Add API authentication for production use
+- [ ] Implement model retraining pipeline
+- [ ] Add data drift detection
+- [ ] Set up CI/CD with GitHub Actions
+- [ ] Deploy to a cloud provider
 
 ## License
 
