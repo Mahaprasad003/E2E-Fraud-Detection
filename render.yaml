@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: fraud-detection-api
+    runtime: docker
+    plan: free
+    branch: main
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: MODEL_PATH
+        value: models/production/xgb_model.joblib
+      - key: SCALER_PATH
+        value: models/production/scaler.joblib
+      - key: PYTHONPATH
+        value: /app

@@ -4,13 +4,14 @@ from pathlib import Path
 import numpy as np
 from typing import Union, Dict, Any, List
 from pydantic import BaseModel, Field, validator
-from config import Config
+from src.config import Config
 import warnings
 
 # Suppress warnings for cleaner output
 warnings.filterwarnings('ignore')
 
 class TransactionData(BaseModel):
+    V1: float
     V2: float
     V3: float
     V4: float

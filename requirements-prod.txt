@@ -1,0 +1,22 @@
+# Production dependencies only - minimal for API serving
+# Generated manually to exclude dev/training dependencies
+
+# API Framework
+fastapi>=0.128.0
+uvicorn>=0.34.1
+pydantic>=2.12.0
+
+# ML Runtime (only what's needed to load and run the model)
+xgboost>=3.1.0
+scikit-learn>=1.7.0
+joblib>=1.5.0
+
+# Data processing
+pandas>=2.3.0
+numpy>=2.3.0
+
+# Observability
+prometheus-fastapi-instrumentator>=7.1.0
+
+# HTTP client (if needed for health checks)
+httpx>=0.28.0

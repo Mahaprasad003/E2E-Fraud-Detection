@@ -1,0 +1,63 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Data files (large CSVs not needed at runtime)
+data/
+
+# Git
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Jupyter notebooks (not needed in production)
+notebooks/
+*.ipynb
+
+# Reports and figures
+reports/
+
+# Tests
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking cache
+.mypy_cache/
+.ruff_cache/
+
+# Package build artifacts
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Environment files (secrets!)
+.env
+.env.*
+
+# Documentation
+*.md
+docs/
+
+# Build tools
+Makefile
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker (avoid recursive copy)
+Dockerfile
+docker-compose.yml
+prometheus/
+grafana/

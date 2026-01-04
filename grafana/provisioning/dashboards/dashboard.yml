@@ -1,0 +1,13 @@
+# Grafana Dashboards - Auto-provisioned on startup
+
+apiVersion: 1
+
+providers:
+  - name: "Fraud Detection Dashboards"
+    orgId: 1
+    folder: ""
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
