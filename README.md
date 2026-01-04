@@ -78,9 +78,9 @@ The t-SNE visualization shows that fraudulent transactions are scattered through
 Multiple models were trained and evaluated to find the best performer:
 
 1. **Logistic Regression** - Baseline model with class weights
-2. **LightGBM** - Gradient boosting with Optuna tuning (30 trials)
-3. **XGBoost** - Gradient boosting with Optuna tuning (30 trials)
-4. **CatBoost** - Ordered boosting with Optuna tuning (30 trials)
+2. **LightGBM** - Gradient boosting with Optuna tuning (20 trials)
+3. **XGBoost** - Gradient boosting with Optuna tuning (20 trials)
+4. **CatBoost** - Ordered boosting with Optuna tuning (20 trials)
 5. **Isolation Forest** - Unsupervised anomaly detection
 
 All models were evaluated using **AUPRC (Area Under Precision-Recall Curve)** as the primary metric. AUPRC is more appropriate than accuracy or ROC-AUC for highly imbalanced datasets.
@@ -92,7 +92,21 @@ All models were evaluated using **AUPRC (Area Under Precision-Recall Curve)** as
 
 **Hyperparameter Tuning:**
 
-Optuna was used for Bayesian optimization of hyperparameters. Each model was tuned for 30 trials with early stopping to prevent overfitting.
+Optuna was used for Bayesian optimization of hyperparameters. Each model was tuned for 20 trials with early stopping to prevent overfitting.
+
+**Final XGBoost Parameters:**
+
+| Parameter | Value |
+|-----------|-------|
+| n_estimators | 197 |
+| learning_rate | 0.156 |
+| max_depth | 6 |
+| min_child_weight | 3 |
+| subsample | 0.601 |
+| colsample_bytree | 0.698 |
+| gamma | 1.130 |
+| reg_alpha | 0.001 |
+| reg_lambda | 0.00006 |
 
 ## Results
 
@@ -121,7 +135,7 @@ Using the optimal F1 threshold:
 
 5-fold stratified CV on the training set confirmed model stability:
 - CV AUPRC: 0.8512 ± 0.0234
-- Optimal trees: 151
+- Optimal trees: 197
 
 ### Feature Importance
 
