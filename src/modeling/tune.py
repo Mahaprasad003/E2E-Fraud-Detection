@@ -46,9 +46,9 @@ def tune_model() -> None:
     print(f"   Positive samples in test:  {sum(y_test==1):,} ({100*sum(y_test==1)/len(y_test):.4f}%)")
 
     # Scale the data
-    print("\n🔄 Scaling data...")
+    print("\nScaling data...")
     X_train_scaled, X_val_scaled, X_test_scaled = scale_data(X_train, X_val, X_test)
-    print("✅ Data scaling completed")
+    print("Data scaling completed")
 
     # Calculate scale_pos_weight for imbalanced classes
     scale_pos_weight = sum(y_train == 0) / sum(y_train == 1)
@@ -59,8 +59,8 @@ def tune_model() -> None:
     repo_name = os.getenv('DAGSHUB_REPO_NAME')
     
     if not repo_owner or not repo_name:
-        print("⚠️  DAGSHUB_USERNAME and DAGSHUB_REPO_NAME not found in .env file")
-        print("📝 Running without MLflow tracking - parameters will still be saved locally")
+        print("DAGSHUB_USERNAME and DAGSHUB_REPO_NAME not found in .env file")
+        print("Running without MLflow tracking - parameters will still be saved locally")
         mlflow_available = False
     else:
         try:
@@ -69,8 +69,8 @@ def tune_model() -> None:
             mlflow_available = True
             print("✅ MLflow tracking initialized")
         except Exception as e:
-            print(f"⚠️  Failed to initialize MLflow tracking: {e}")
-            print("📝 Running without MLflow tracking - parameters will still be saved locally")
+            print(f"Failed to initialize MLflow tracking: {e}")
+            print("Running without MLflow tracking - parameters will still be saved locally")
             mlflow_available = False
 
     def objective_xgb(trial: optuna.Trial) -> float:
@@ -117,7 +117,7 @@ def tune_model() -> None:
     print(f"\nBest XGBoost AUPRC (Val): {study_xgb.best_value:.4f}")
     
     # Save best parameters to params.yaml
-    print("\n💾 Saving best parameters to params.yaml...")
+    print("\nSaving best parameters to params.yaml...")
     best_params = study_xgb.best_params
     
     # Load current params
@@ -136,8 +136,8 @@ def tune_model() -> None:
     with open(config_path, 'w') as f:
         yaml.dump(current_params, f, default_flow_style=False, sort_keys=False)
     
-    print("✅ Best parameters saved to params.yaml")
-    print(f"📊 Best parameters: {best_params}")
+    print("Best parameters saved to params.yaml")
+    print(f"Best parameters: {best_params}")
 
 
 if __name__ == '__main__':

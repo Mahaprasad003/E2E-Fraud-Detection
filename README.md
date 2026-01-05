@@ -240,7 +240,7 @@ fraud-detection/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fraud-detection.git
+git clone https://github.com/Mahaprasad003/fraud-detection.git
 cd fraud-detection
 ```
 
@@ -315,16 +315,9 @@ The Dockerfile is compatible with any container platform:
 | Experiment Tracking | MLflow, DagsHub |
 | Hyperparameter Tuning | Optuna |
 | Monitoring | Prometheus, Grafana |
-| Containerization | Docker, Docker Compose |
+| Containerization | Docker |
 | Data Processing | pandas, NumPy |
 
-## Future Improvements
-
-- [ ] Add API authentication for production use
-- [ ] Implement model retraining pipeline
-- [ ] Add data drift detection
-- [ ] Set up CI/CD with GitHub Actions
-- [ ] Deploy to a cloud provider
 
 ## License
 
